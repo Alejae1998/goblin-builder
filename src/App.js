@@ -22,6 +22,7 @@ function App() {
   const [goblinFormColor, setGoblinFormColor] = useState('lightgreen');
   const [filterQuery, setFilterQuery] = useState('');
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => handleFilterGoblins(filterQuery), [filterQuery]);
 
   function submitGoblin(e) {
@@ -34,7 +35,7 @@ function App() {
       color: goblinFormColor,
     };
     // update the allGoblins array. Add the new goblin to the allGoblins array immutably.
-    setAllFilteredGoblins([...allGoblins, newGoblin]);
+    setAllGoblins([...allGoblins, newGoblin]);
     // clear out the goblin form state items by setting them to empty strings. This will cause the form to reset in the UI.
     setGoblinFormName('');
     setGoblinFormHP('');
@@ -47,7 +48,7 @@ function App() {
     // use splice to delete the goblin object at this index
     allGoblins.splice(goblinIndex, 1);
     // update the allGoblins array immutably to this new, smaller array
-    setAllFilteredGoblins([...allGoblins]);
+    setAllGoblins([...allGoblins]);
   }
 
   function handleFilterGoblins(search) {
@@ -99,7 +100,7 @@ function App() {
         setGoblinFormHP={setGoblinFormHP}
       />
       <GoblinList
-        goblins={[]} // this takes in an array of goblins. If the filteredGoblins has a length, use that array. Otherwise, use the allGoblins array
+        goblins={filterQuery ? filteredGoblins : allGoblins} // this takes in an array of goblins. If the filteredGoblins has a length, use that array. Otherwise, use the allGoblins array
         handleDeleteGoblin={handleDeleteGoblin} // note that the goblin list has access to the ability to delete
       />
     </div>
